@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [0.6.9] - 2026-11-08
+
+### Fixed
+- **[BUG] Town Details Modal Tooltip Pierce-Through (Z-Order, follow-up to 0.6.8)**:
+  - The 0.6.8 fix suppressed underlying labels while the Town Dossier modal is open, but `TradingPostScreen.render()` still called `renderTooltip()` before drawing the modal. Slot tooltips render at a higher z-offset and flush the text batch, so underlying title/tab text could still pierce the modal. The modal is now drawn after all other rendering, and slot tooltips are skipped entirely while `showingTownDetails` is active.
+
+---
+
 ## [0.6.8] - 2026-11-01
 
 ### Fixed
