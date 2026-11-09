@@ -7,6 +7,38 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [0.3.0] - 2026-11-08
+
+> Versioning note: public version numbers are being reset to a saner cadence
+> starting with this release. Content-wise, 0.3.0 succeeds the internal
+> 0.6.x development line and contains everything in it.
+
+### Added
+- Mod logo now ships inside the jar (logoFile), so the mod icon shows in
+  launchers (FTB app, mod lists) instead of a blank placeholder.
+- Everything from the 0.6.8 line: Trade Manager worker, Recurring Trade
+  Manifests, Market Board purchase modal with full listing details,
+  Trading Ledger Item Demand View, Auto-Deposit, Interactive Mail
+  Persuasion dialogue.
+
+### Fixed
+- Town Dossier (Towns -> Details) modal: screen title and tab labels no
+  longer render on top of the modal; tooltips no longer pierce through it.
+- Shipment Note infinite-money loop (player-reported): the Shipment Note
+  item was removed, coins and coin bags price at 0, and a config item
+  blacklist now keeps problem items out of trading entirely.
+- Market Board pricing overhaul for modded items, Trading Ledger
+  "Upgrade Caravan", 2.2s Market Board hover-tooltip delay, trade
+  manifest quantity slider.
+
+## [0.6.9] - 2026-11-08
+
+### Fixed
+- **[BUG] Town Details Modal Tooltip Pierce-Through (Z-Order, follow-up to 0.6.8)**:
+  - The 0.6.8 fix suppressed underlying labels while the Town Dossier modal is open, but `TradingPostScreen.render()` still called `renderTooltip()` before drawing the modal. Slot tooltips render at a higher z-offset and flush the text batch, so underlying title/tab text could still pierce the modal. The modal is now drawn after all other rendering, and slot tooltips are skipped entirely while `showingTownDetails` is active.
+
+---
+
 ## [0.6.8] - 2026-11-01
 
 ### Fixed
