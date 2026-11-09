@@ -2814,9 +2814,13 @@ public class TradingPostScreen extends AbstractContainerScreen<TradingPostMenu> 
     public void render(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
         renderBackground(poseStack);
         super.render(poseStack, mouseX, mouseY, partialTick);
-        renderTooltip(poseStack, mouseX, mouseY);
 
         if (showingTownDetails) {
+            // The Town Dossier modal is the topmost layer. Draw it after
+            // everything else and skip renderTooltip entirely while it is
+            // open: slot tooltips render at a higher z-offset and flush the
+            // text batch, which let underlying title/tab text pierce the
+            // modal even with the renderLabels guard in place.
             RenderSystem.disableDepthTest();
             poseStack.pushPose();
             poseStack.translate(0, 0, 200);
@@ -2827,6 +2831,8 @@ public class TradingPostScreen extends AbstractContainerScreen<TradingPostMenu> 
             RenderSystem.enableDepthTest();
             return;
         }
+
+        renderTooltip(poseStack, mouseX, mouseY);
 
         // Activity tooltip on hover (Activity tab)
         if (currentTab == Tab.ACTIVITY && hoveredActivityRow >= 0) {
